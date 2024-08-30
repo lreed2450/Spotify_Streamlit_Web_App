@@ -32,27 +32,79 @@ st.set_page_config(page_title="Spotify Song Analysis", page_icon=':musical_note:
 st.title('Analysis for Your Top Songs')
 st.write('Discover insights about your spotify listening habits')
 
-limit = 10
-time_range = 'long_term'
+option = st.selectbox(
+    "How far back should we look for your top songs and artists",
+    ("long_term", "medium_term", "short_term"),
+)
 
-top_tracks = sp.current_user_top_tracks(limit=limit, time_range=time_range)
+if option =='long_term':
+  st.write(f"You selected: {option}. We will pull data from up to a year ago.")
 
-top_artits = sp.current_user_top_artists(limit=limit, time_range=time_range)
+elif option =='medium_term':
+  st.write(f"You selected: {option}. We will pull data from up to 6 months ago.")
 
-track_ids = [track['id']for track in top_tracks['items']]
+else:
+   st.write(f"You selected: {option}. We will pull data from up to 4 weeks ago.")
 
-audio_features = sp.audio_features(track_ids)
+
+limit = st.slider("How many songs should we analyze?", min_value = 5, max_value = 20, step = 1)
+st.write(f"You chose {limit} songs.")
 
 
-df = pd.DataFrame(audio_features)
+def top_tracks(limit, time_range):
+    """displays top n tracks based on limit and time range"""
 
-df['track_name'] = [track['name'] for track in top_tracks['items']]
 
-df = df[['track_name', 'danceability', 'energy', 'instrumentalness']]
+    top_tracks = sp.current_user_top_tracks(limit=limit, time_range=time_range)
 
-df.set_index('track_name', inplace=True)
+
+    track_ids = [track['id']for track in top_tracks['items']]
+
+    audio_features = sp.audio_features(track_ids)
+
+
+    tracks_df = pd.DataFrame(audio_features)
+
+    tracks_df['track_name'] = [track['name'] for track in top_tracks['items']]
+
+    tracks_df = tracks_df[['track_name', 'danceability', 'energy', 'instrumentalness']]
+
+
+    return tracks_df
+
+
+def top_artists(limit, time_range):
+    """displays top n artist based on limit and time range"""
+
+    top_artists = sp.current_user_top_artists(limit=limit, time_range=time_range)
+
+    artists_df = pd.DataFrame(columns=['artist_name', 'genres']) 
+
+    idx = 0
+
+
+    for artist in top_artists['items']:
+        artist_name = top_artists['items'][idx]['name']
+        genres = top_artists['items'][idx]['genres']
+        artists_df = artists_df.append({'artist_name': artist_name, 'genres': genres}, ignore_index=True)
+        idx += 1
+
+    # artists_df.set_index(artists_df['artist_name'], inplace=True)
+
+    return artists_df
+
+tracks_df = top_tracks(limit, option)
+artists_df = top_artists(limit, option)
+
+tracks_df_for_chart = tracks_df.set_index('track_name', inplace=False)
+
 
 st.subheader('Audio Features for Top Tracks')
-st.bar_chart(df, height=500, x_label='Song Title')
+st.bar_chart(tracks_df_for_chart, height=500, x_label='Song Title')
+
+st.subheader('Top songs and artists')
+st.dataframe(tracks_df, hide_index=True)
+
+st.dataframe(artists_df, hide_index=True)
 
 
