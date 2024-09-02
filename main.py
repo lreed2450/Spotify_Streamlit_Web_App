@@ -27,14 +27,19 @@ sp = spotipy.Spotify(
     )
 )
 
-st.set_page_config(page_title="Spotify Song Analysis", page_icon=':musical_note:')
+st.set_page_config(page_icon=':musical_note:')
 
-st.title('Analysis for Your Top Songs')
-st.write('Discover insights about your spotify listening habits')
+current_user = sp.current_user()['display_name']
 
-option = st.selectbox(
-    "How far back should we look for your top songs and artists",
-    ("long_term", "medium_term", "short_term"),
+st.header(f'Hello, {current_user}. Welcome to your Spotify Song Analysis :musical_note:', divider='rainbow')
+
+
+st.subheader('Discover insights about your spotify listening habits')
+
+st.write('**How far back should we look for your top songs and artists**')
+
+option = st.selectbox(label="Choose an option.",
+    options=("long_term", "medium_term", "short_term"),
 )
 
 if option =='long_term':
@@ -47,7 +52,10 @@ else:
    st.write(f"You selected: {option}. We will pull data from up to 4 weeks ago.")
 
 
-limit = st.slider("How many songs should we analyze?", min_value = 5, max_value = 20, step = 1)
+st.write('**How many songs should we analyze?**')
+
+limit = st.slider(label='Choose an option.', min_value = 5, max_value = 20, step = 1)
+
 st.write(f"You chose {limit} songs.")
 
 
