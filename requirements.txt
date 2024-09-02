@@ -1,5 +1,5 @@
-spotipy=2.24.0
-streamlit=1.38.0
+spotipy==2.24.0
+streamlit==1.38.0
 pandas
 os
 from dotenv import load_dotenv
