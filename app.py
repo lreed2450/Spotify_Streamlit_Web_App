@@ -89,16 +89,24 @@ def top_artists(limit, time_range):
     artists_df = pd.DataFrame(columns=['artist_name', 'genres']) 
 
     idx = 0
+    artist_ser = pd.Series()
+    genres_ser = pd.Series()
+
 
 
     for artist in top_artists['items']:
         artist_name = top_artists['items'][idx]['name']
         genres = top_artists['items'][idx]['genres']
-        artists_df = artists_df.append({'artist_name': artist_name, 'genres': genres},ignore_index=True)
+        artist_ser = artist_ser.append(artist_name)
+        genres_ser = genres_ser.append(genres)
+        # artists_df = artists_df.append({'artist_name': artist_name, 'genres': genres},ignore_index=True)
         # artists_df = artists_df.append({'artist_name': artist_name, 'genres': genres}, ignore_index=True)
         idx += 1
 
     # artists_df.set_index(artists_df['artist_name'], inplace=True)
+
+    artists_df.loc['artist_name'] = artist_ser
+    artists_df.loc['genres'] = genres_ser
 
     return artists_df
 
