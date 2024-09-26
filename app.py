@@ -97,8 +97,8 @@ def top_artists(limit, time_range):
     for artist in top_artists['items']:
         artist_name = top_artists['items'][idx]['name']
         genres = top_artists['items'][idx]['genres']
-        artist_list = artist_list.append(artist_name)
-        genres_slist = genres_list.append(genres)
+        artist_list.append(artist_name)
+        genres_list.append(genres)
         # artists_df = artists_df.append({'artist_name': artist_name, 'genres': genres},ignore_index=True)
         # artists_df = artists_df.append({'artist_name': artist_name, 'genres': genres}, ignore_index=True)
         idx += 1
