@@ -1,4 +1,11 @@
-spotipy==2.24.0
-streamlit==1.38.0
+# spotipy==2.24.0
+# streamlit==1.38.0
+# pandas
+# dotenv==0.0.5
+
+spotipy
+spotipy.oauth2 
+streamlit
 pandas
-dotenv==0.0.5
+os
+dotenv
