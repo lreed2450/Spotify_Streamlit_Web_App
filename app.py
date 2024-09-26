@@ -86,7 +86,7 @@ def top_artists(limit, time_range):
 
     top_artists = sp.current_user_top_artists(limit=limit, time_range=time_range)
 
-    artists_df = pd.DataFrame(columns=['artist_name', 'genres']) 
+    artists_df = pd.DataFrame() 
 
     idx = 0
     artist_list = []
@@ -105,8 +105,8 @@ def top_artists(limit, time_range):
 
     # artists_df.set_index(artists_df['artist_name'], inplace=True)
 
-    artists_df.loc['artist_name'] = pd.Series(artist_list)
-    artists_df.loc['genres'] = pd.Series(genres_list)
+    artists_df['artist_name'] = artist_list
+    artists_df['genres'] = genres_list
 
     return artists_df
 
