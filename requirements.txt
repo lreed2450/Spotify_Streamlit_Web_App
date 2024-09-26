@@ -7,5 +7,5 @@ spotipy
 # spotipy.oauth2 
 streamlit
 pandas
-os
+# os
 dotenv
