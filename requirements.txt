@@ -1,5 +1,5 @@
 spotipy==2.24.0
 streamlit==1.38.0
-pandas==1.4.2
+pandas==2.2.3
 python-dotenv==0.21.1
 numpy==2.0.2
