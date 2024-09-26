@@ -94,7 +94,8 @@ def top_artists(limit, time_range):
     for artist in top_artists['items']:
         artist_name = top_artists['items'][idx]['name']
         genres = top_artists['items'][idx]['genres']
-        artists_df = artists_df.append({'artist_name': artist_name, 'genres': genres}, ignore_index=True)
+        artists_df.iloc[idx] = pd.concat(pd.DataFrame({'artist_name': artist_name, 'genres': genres}), ignore_index=True)
+        # artists_df = artists_df.append({'artist_name': artist_name, 'genres': genres}, ignore_index=True)
         idx += 1
 
     # artists_df.set_index(artists_df['artist_name'], inplace=True)
