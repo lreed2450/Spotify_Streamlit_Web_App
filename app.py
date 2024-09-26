@@ -15,14 +15,14 @@ CLIENT_SECRET = st.secrets["CLIENT_ID"]
 
 # CLIENT_ID = os.getenv('CLIENT_ID')
 # CLIENT_SECRET = os.getenv('CLIENT_SECRET')
-REDIRECT_URI = 'http://localhost:5000'
+# REDIRECT_URI = 'http://localhost:5000'
 
 
 sp = spotipy.Spotify(
     auth_manager=SpotifyOAuth(
       client_id=CLIENT_ID,
       client_secret=CLIENT_SECRET,
-      redirect_uri=REDIRECT_URI,
+      # redirect_uri=REDIRECT_URI,
       scope='user-top-read' 
 
     )
